@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from cgitb import reset
 from operator import imod
 from unittest import result

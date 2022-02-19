@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# -*- encoding:utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from cgitb import handler
 from urllib import response
