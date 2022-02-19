@@ -12,7 +12,7 @@ from urllib.request import (
 from urllib.error import URLError
 
 username = "admin"
-password = "admin1"
+password = "admin"
 url = "https://ssr3.scrape.center/"
 
 p = HTTPPasswordMgrWithDefaultRealm()
