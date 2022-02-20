@@ -4,6 +4,9 @@
 ## 章节
 
 ## 1. urllib库的基本使用
+<details>
+<!-- <summary>查看内容</summary> -->
+
 - 发送请求
   - urlopen
   - data参数
@@ -25,3 +28,4 @@
 - 解析链接
   - urlparse
   - urlunparse
+</details>
