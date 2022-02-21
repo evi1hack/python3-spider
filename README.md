@@ -1,5 +1,5 @@
-# python3-sprider
-> python3 sprider notes.
+# python3-spider
+> python3 spider notes.
 
 ## 章节
 
@@ -28,4 +28,15 @@
 - 解析链接
   - urlparse
   - urlunparse
+  - urlsplit
+  - urlunsplit
+  - urljoin
+  - urlencode
+  - parse_qs
+  - parse_qsl
+  - quote
+  - unquote
+- 分析Robots协议
+  - Robots协议
+  - robotparse
 </details>
