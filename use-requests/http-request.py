@@ -21,3 +21,9 @@ print(r.cookies)
 <RequestsCookieJar[<Cookie BDORZ=27315 for .baidu.com/>]>
 
 """
+
+r1 = requests.get('https://scrape.center/favicon.ico')
+# print(r1.text)
+# print(r1.content)
+with open('favicon.ico', 'wb') as f:
+    f.write(r1.content)
