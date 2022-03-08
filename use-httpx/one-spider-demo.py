@@ -9,6 +9,7 @@ import json
 import requests
 import logging
 import re
+import multiprocessing
 from urllib.parse import urljoin
 
 format = "%(asctime)s - %(levelname)s: %(message)s"
@@ -127,19 +128,37 @@ def save_data(data):
     )
 
 
-def main():
-    for page in range(1, TOTAL_PAGE + 1):
-        index_html = scrape_index(page)
-        detail_urls = parse_index(index_html)
-        # logging.info("detail urls %s", list(detail_urls))
-        for detail_url in detail_urls:
-            detail_html = scrape_detail(detail_url)
-            data = parse_detail(detail_html)
-            logging.info("get detail data %s", data)
-            logging.info("saving data to json file...")
-            save_data(data)
-            logging.info("data saved successfully.")
+# 基础实现
+# def main():
+#     for page in range(1, TOTAL_PAGE + 1):
+#         index_html = scrape_index(page)
+#         detail_urls = parse_index(index_html)
+#         # logging.info("detail urls %s", list(detail_urls))
+#         for detail_url in detail_urls:
+#             detail_html = scrape_detail(detail_url)
+#             data = parse_detail(detail_html)
+#             logging.info("get detail data %s", data)
+#             logging.info("saving data to json file...")
+#             save_data(data)
+#             logging.info("data saved successfully.")
+
+# 多进程加速
+def main(page):
+    index_html = scrape_index(page)
+    detail_urls = parse_index(index_html)
+    # logging.info("detail urls %s", list(detail_urls))
+    for detail_url in detail_urls:
+        detail_html = scrape_detail(detail_url)
+        data = parse_detail(detail_html)
+        logging.info("get detail data %s", data)
+        logging.info("saving data to json file...")
+        save_data(data)
+        logging.info("data saved successfully.")
 
 
 if __name__ == "__main__":
-    main()
+    pool = multiprocessing.Pool()
+    pages = range(1, TOTAL_PAGE + 1)
+    pool.map(main, pages)
+    pool.close()
+    pool.join()
