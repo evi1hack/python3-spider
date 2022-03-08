@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from unicodedata import category
+from genericpath import exists
+from os import makedirs
+from textwrap import indent
 from urllib import response
+import json
 import requests
 import logging
 import re
 from urllib.parse import urljoin
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s: %(message)s"
-)
+format = "%(asctime)s - %(levelname)s: %(message)s"
+logging.basicConfig(level=logging.INFO, format=format)
 
 BASE_URL = "https://ssr1.scrape.center"
 TOTAL_PAGE = 10
@@ -112,6 +114,19 @@ def parse_detail(html):
     }
 
 
+# 保存数据
+RESULT_DIR = "results"  # 结果文件夹名称
+exists(RESULT_DIR) or makedirs(RESULT_DIR)  # 判断文件是否存在，如果不存在就创建
+
+
+def save_data(data):
+    name = data.get("name")  # 作为文件名
+    data_path = f"{RESULT_DIR}/{name}.json"  # json文件路径和名称
+    json.dump(
+        data, open(data_path, "w", encoding="utf-8"), ensure_ascii=False, indent=2
+    )
+
+
 def main():
     for page in range(1, TOTAL_PAGE + 1):
         index_html = scrape_index(page)
@@ -121,6 +136,9 @@ def main():
             detail_html = scrape_detail(detail_url)
             data = parse_detail(detail_html)
             logging.info("get detail data %s", data)
+            logging.info("saving data to json file...")
+            save_data(data)
+            logging.info("data saved successfully.")
 
 
 if __name__ == "__main__":
